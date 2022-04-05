@@ -225,8 +225,101 @@ FROM films;
 
 
 
-###sorting and grouping
+###order by
+#Get the names of people from the people table, sorted alphabetically.
+SELECT name
+FROM people
+ORDER BY name;
+
+#Get the birth date and name for every person, in order of when they were born.
+SELECT birthdate, name
+FROM people
+ORDER BY birthdate;
+
+
+###sort single columns
+#Get the title of films released in 2000 or 2012, in the order they were released.
+SELECT title
+FROM films
+WHERE release_year in (2000,2012)
+ORDER BY release_year;
+
+#Get all details for all films except those released in 2015 and order them by duration.
+SELECT *
+FROM films
+****(<>:not equal) WHERE release_year <> 2015
+ORDER BY duration;
+
+#Get the title and gross earnings for movies which begin with the letter 'M' and order the results alphabetically.
+SELECT title, gross
+FROM films
+WHERE title LIKE 'M%'
+ORDER BY title;
 
 
 
 
+###sort single columns(desc)
+#Get the IMDB score and film ID for every film from the reviews table, sorted from highest to lowest score.
+SELECT imdb_score, film_id
+FROM reviews
+ORDER BY imdb_score desc;
+
+#Get the title for every film, in reverse order.
+SELECT title
+FROM films
+ORDER BY title desc;
+
+#Get the title and duration for every film, in order of longest duration to shortest.
+SELECT title, duration
+FROM films
+ORDER BY duration desc;
+
+
+
+
+###sort multiple columns
+#Get the birth date and name of people in the people table, in order of when they were born and alphabetically by name.
+SELECT birthdate, name
+FROM people
+ORDER BY birthdate, name;
+
+#Get the release year, duration, and title of films ordered by their release year and duration.
+SELECT release_year, duration, title
+FROM films
+ORDER BY release_year, duration;
+
+#Get certifications, release years, and titles of films ordered by certification (alphabetically) and release year.
+SELECT certifications, release_year, title
+FROM films
+ORDER BY certification, release_year;
+
+
+
+
+###group by
+#Get the release year and count of films released in each year.
+SELECT release_year, COUNT(*)
+FROM films
+GROUP BY release_year;
+
+#Get the release year and average duration of all films, grouped by release year.
+SELECT release_year, AVG(duration)
+FROM films
+GROUP BY release_year;
+
+#Get the release year and largest budget for all films, grouped by release year.
+SELECT release_year, MAX(budget)
+FROM films
+GROUP BY release_year;
+
+#Get the IMDB score and count of film reviews grouped by IMDB score in the reviews table.
+SELECT imdb_score, COUNT(num_votes)
+FROM films
+GROUP BY imdb_score;
+
+#Get the country, release year, and lowest amount grossed per release year per country. Order your results by country and release year.
+SELECT country, release_year, MIN(gross)
+FROM films
+GROUP BY release_year, country
+ORDER BY country, release_year;
